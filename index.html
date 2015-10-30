@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>How strong is my password?</title>
+  <meta name=viewport content="width=device-width, initial-scale=1">
+  <style>
+
+  </style>
+</head>
+
+<body>
+<h1>How strong is my password?</h1>
+<input placeholder="passw0rd" id="password" />
+<h2>Strength</h2>
+<p id="strength" />
+
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js">
+</script>
+<script type="text/javascript" src="bower_components/zxcvbn/dist/zxcvbn.js">
+</script>
+<script>
+$('#password').bind('input', function() { 
+    var password = $(this).val();
+    var result = zxcvbn(password);
+    var time = result.crack_times_display.offline_fast_hashing_1e10_per_second;
+    $("#strength").text("Your password could be cracked in " + time + " by a desktop PC.");
+});
+</script>
+</body>
+
+</html>

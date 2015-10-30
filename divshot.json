@@ -1,0 +1,6 @@
+{
+  "name": "how-strong-is-my-password",
+  "root": "./",
+  "clean_urls": true,
+  "error_page": "error.html"
+}
