@@ -2,5 +2,9 @@
   "name": "how-strong-is-my-password",
   "root": "./",
   "clean_urls": true,
-  "error_page": "error.html"
+  "error_page": "error.html",
+    "headers": {
+    "**": {
+        "Strict-Transport-Security": "max-age=31536000"
+    }
 }
