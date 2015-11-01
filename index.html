@@ -11,13 +11,28 @@
 
 <body>
 <h1>How strong is my password?</h1>
-<input placeholder="passw0rd" id="password" autofocus/>
 
-<p id="strength" />
+<p>Test the strength of your password:</p>
 
-<h2>Choosing a strong password</h2>
+<input placeholder="password" id="password" autofocus/>
 
-<p>A simple way to choose a password that's both strong and <em>easy to remember</em> is to use <a href="https://xkcd.com/936/">four random words</a>.</p>
+<p id="question">How long would it take to crack your password?</p>
+
+<p id="answer" style="display:none;">Your password could be cracked by a desktop PC in about <strong id="time"></strong>. <span id="warning"/></p>
+
+
+<h2>Choosing a password</h2>
+
+<p>A simple way to choose a password that's both strong and memorable is to use <a href="http://passphra.se/">four random words</a>. A helpful <a href="https://xkcd.com/936/">memory trick</a> is to make up a story to fit them.</p>
+
+<h2>Password hygiene</h2>
+
+<ol>
+<li>Don't re-use passwords between sites—especially important ones. You don't know who'll take good care of it and who might lose it. Data breaches aren't always detected or reported.</li>
+<li>Turn on <a href="https://grahamcluley.com/2014/03/two-factor-authentication-list/">two-factor authentication</a> where supported—such as for <a href="https://www.google.com/landing/2step/">Gmail</a> and <a href="https://www.dropbox.com/account/security">Dropbox</a>.</li>
+<li>Delete any emails asking you to 'reset your password'. These are invariably <a href="http://www.actionfraud.police.uk/fraud-az-phishing">phishing</a>. Banks never ask people to do this.</li>
+<li>Don't follow links from emails, but use URLs you have bookmarked or typed yourself. Check the URL looks correct and begins 'https:'</li>
+</ol>
 
 <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js">
 </script>
@@ -26,15 +41,30 @@
 <script>
 $('#password').bind('input', function() { 
     var password = $(this).val();
+    if (password === '') {
+      $("#answer").hide();
+      $("#question").show();
+      return;
+    }
+
     var result = zxcvbn(password);
-    var time = result.crack_times_display.offline_fast_hashing_1e10_per_second;
-    $("#strength").text("Your password could be cracked by a desktop PC in about " + time);
+    var time = result.crack_times_display.offline_slow_hashing_1e4_per_second;
+    $("#time").text(time);
+
+    var warning = result.feedback.warning;
+    if (warning) {
+      warning = warning + '.';
+    }
+
+    $("#warning").text(warning);
+
+    $("#question").hide();
+    $("#answer").show();
+
 });
 </script>
 
 <a href="https://github.com/hickford/how-strong-is-my-password"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
-
-
 
 </body>
 
